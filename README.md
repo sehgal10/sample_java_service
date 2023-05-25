@@ -60,6 +60,5 @@ git clone https://github.com/sukhwinder/org-sample_service-eth.git
 - MONGODB_URL
 - MONGODB_USERNAME
 - MONGODB_PASSWORD
-- ETH_API_URL
 
 4. Run the application as Spring Boot App.
