@@ -1,0 +1,39 @@
+version: "3"
+services:
+  mysqldb:
+    image: mysql
+    networks:
+      - java-db
+    restart: on-failure
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=sample
+      
+  mongodb:
+    image: mongo
+    networks:
+      - java-db
+    restart: on-failure
+  
+  org-sample_service-eth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - java-db
+    depends_on:
+      - mysqldb
+      - mongodb
+    restart: on-failure
+    ports:
+      - 8080:8080
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysqldb:3306/sample
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=root
+      - MONGODB_URL=mongodb://mongodb:27017/sample
+      - MONGODB_USERNAME=root
+      - MONGODB_PASSWORD=root
+
+networks:
+  java-db:
